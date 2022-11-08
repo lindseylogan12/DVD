@@ -8,7 +8,8 @@ import com.mthreell.dvdlibrary.dto.Dvd;
 import java.util.List;
 
 /**
- * the view (and helper classes) resp for all user interaction; no other component
+ * this handles all UI logic
+ * the view (and helper classes) responsible for all user interaction; no other component
  * may interact with the user
  * The View cannot access the DAO.
  * @author lindseylogan
@@ -121,8 +122,6 @@ public class DvdLibraryView {
     
     
     
-    
-    
     //4. display info for dvd
     public void displayDvdBanner() {
         io.print("=== Display DVD ===");
@@ -173,7 +172,6 @@ public class DvdLibraryView {
     }
     io.readString("Please hit enter to continue.");
     }
-    
     
     
     //6. remove a dvd

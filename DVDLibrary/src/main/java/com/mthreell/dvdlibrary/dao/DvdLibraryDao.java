@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * DAO is resp for the persistence and retrieval of DVD data
  * DAO cannot access the View.
+ * This interface defines all methods that must be implm by any class that wants to play role of DAO appl
  * @author lindseylogan
  */
 public interface DvdLibraryDao {

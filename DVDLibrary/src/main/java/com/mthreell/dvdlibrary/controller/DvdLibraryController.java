@@ -6,7 +6,6 @@ package com.mthreell.dvdlibrary.controller;
 
 import com.mthreell.dvdlibrary.dao.DvdLibraryDao;
 import com.mthreell.dvdlibrary.dao.DvdLibraryDaoException;
-import com.mthreell.dvdlibrary.dao.DvdLibraryDaoFileImpl;
 import com.mthreell.dvdlibrary.dto.Dvd;
 import com.mthreell.dvdlibrary.ui.DvdLibraryView;
 import com.mthreell.dvdlibrary.ui.UserIO;
@@ -15,7 +14,8 @@ import java.util.List;
 
 /**
  *  controller "brains of the operation"; like a GC directing work
- * Controller can talk to both the View and the DAO
+ * Controller can talk to both the View and the DAO (only dao, not any impl details)
+ * knows what, when, and what component
  * @author lindseylogan
  */
 public class DvdLibraryController {

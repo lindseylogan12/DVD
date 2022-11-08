@@ -5,7 +5,7 @@
 package com.mthreell.dvdlibrary.ui;
 
 /**
- *
+ * Defines methods to be impl by any class that wants to directly interact with user interface tech
  * @author lindseylogan
  */
 public interface UserIO {

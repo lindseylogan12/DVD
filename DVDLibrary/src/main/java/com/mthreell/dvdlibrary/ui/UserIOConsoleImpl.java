@@ -7,7 +7,7 @@ package com.mthreell.dvdlibrary.ui;
 import java.util.Scanner;
 
 /**
- *
+ * this is console=specific implementation of UserIO interface
  * @author lindseylogan
  */
 public class UserIOConsoleImpl implements UserIO {

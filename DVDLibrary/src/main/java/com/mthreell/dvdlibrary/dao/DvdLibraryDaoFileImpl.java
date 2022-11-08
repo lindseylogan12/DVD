@@ -19,6 +19,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 /**
+ * text file-specific implementation of DAO interface
  * file persistence feature added at end
  * @author lindseylogan
  */
@@ -94,13 +95,18 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
         dvdFromFile.setStudio(dvdTokens[4]);
         dvdFromFile.setUserRatingOrNote(dvdTokens[5]);
         
+        //created new dvd object, return it
         return dvdFromFile;
     }
     
+    
+    //reads dvd file into memory
+    // read the line into string var, pass line to unmarshall method to parse into object, and put newly created object into map
     private void loadDvds() throws DvdLibraryDaoException {
         Scanner scanner;
         
         try {
+            //scanner to read file
             scanner = new Scanner(
             new BufferedReader(
             new FileReader(DVD_FILE)));
@@ -108,19 +114,22 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
             throw new DvdLibraryDaoException(
             "-_- Could not load DVD data into memory.", e);
         }
+        //curentLine holds most recent line read from file
         String currentLine;
-        
+        //curentDvd holds more recent DVD unmarshalled
         Dvd currentDvd;
         
         while (scanner.hasNextLine()) {
             currentLine = scanner.nextLine();
             currentDvd = unmarshallDvd(currentLine);
             
+            //use title as map key in our map
             dvds.put(currentDvd.getTitle(), currentDvd);
         }
         scanner.close();
     }
     
+    //turn dvd into line of text for our file
     private String marshallDvd(Dvd aDvd) {
         
         String dvdAsText = aDvd.getTitle() + DELIMITER;
@@ -134,6 +143,8 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
         return dvdAsText;
     }
     
+    //turn dvd to text using marshall method
+    //write string to output file
     private void writeDvd() throws DvdLibraryDaoException {
         PrintWriter out;
         
@@ -146,12 +157,17 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
         }
         
         String dvdAsText;
+        //reuse list method since we've alrdy created it
         List<Dvd> dvdList = this.getAllDvds();
         for (Dvd currentDvd : dvdList) {
+            //turn dvd into string
             dvdAsText = marshallDvd(currentDvd);
+            //write dvd object into our file
             out.println(dvdAsText);
+            //force printwriter to write line to the file
             out.flush();
         }
+        //clean up by closing printwriter
         out.close();
     }
     

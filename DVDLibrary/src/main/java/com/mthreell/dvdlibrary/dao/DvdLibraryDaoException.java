@@ -5,7 +5,7 @@
 package com.mthreell.dvdlibrary.dao;
 
 /**
- *
+ * Error class of application. Extends Exception (inheritance)
  * @author lindseylogan
  */
 public class DvdLibraryDaoException extends Exception {
