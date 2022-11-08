@@ -5,6 +5,7 @@
 package com.mthreell.dvdlibrary.controller;
 
 import com.mthreell.dvdlibrary.dao.DvdLibraryDao;
+import com.mthreell.dvdlibrary.dao.DvdLibraryDaoException;
 import com.mthreell.dvdlibrary.dao.DvdLibraryDaoFileImpl;
 import com.mthreell.dvdlibrary.dto.Dvd;
 import com.mthreell.dvdlibrary.ui.DvdLibraryView;
@@ -19,14 +20,15 @@ import java.util.List;
  */
 public class DvdLibraryController {
     
-    private DvdLibraryView view = new DvdLibraryView();
-    private DvdLibraryDao dao = new DvdLibraryDaoFileImpl();
+    private DvdLibraryView view;
+    private DvdLibraryDao dao;
     private UserIO io = new UserIOConsoleImpl();
     
     public void run() {
         boolean keepGoing = true;
         int menuSelection = 0;
-        while (keepGoing) {
+        try {
+            while (keepGoing) {
             
             menuSelection = getMenuSelection();
             
@@ -58,6 +60,10 @@ public class DvdLibraryController {
                     
         }
         exitMessage();
+    } catch (DvdLibraryDaoException e) {
+        view.displayErrorMessage(e.getMessage());
+    }
+        
     }
     
     private int getMenuSelection() {
@@ -65,7 +71,7 @@ public class DvdLibraryController {
     }
     
     //1. add dvd to collection
-    private void addDvd() {
+    private void addDvd() throws DvdLibraryDaoException {
         view.displayAddDvdBanner();
         Dvd newDvd = view.getNewDvdInfo();
         dao.addDvd(newDvd.getTitle(), newDvd);
@@ -73,7 +79,7 @@ public class DvdLibraryController {
     }
     
     //2. update existing dvd
-    private void updateDvd() {
+    private void updateDvd() throws DvdLibraryDaoException {
         String title = view.getTitleChoice();
         Dvd dvd = dao.getDvd(title);
         view.updateDvd(dvd);
@@ -83,7 +89,7 @@ public class DvdLibraryController {
     }
     
     //3. search DVDs by title
-    private void getDvdsByTitle() {
+    private void getDvdsByTitle() throws DvdLibraryDaoException {
         String title = view.getTitleChoice();
         List<Dvd> dvdsByTitle = dao.getDvdsByTitle(title);
         view.displayDvdCollection(dvdsByTitle);
@@ -91,14 +97,14 @@ public class DvdLibraryController {
     
     
     //4. list all dvds in collection
-    private void listDvds() {
+    private void listDvds() throws DvdLibraryDaoException {
         view.displayDisplayAllBanner();
         List<Dvd> dvdList = dao.getAllDvds();
         view.displayDvdCollection(dvdList);
     }
     
     //5. display given dvd
-    private void viewDvd() {
+    private void viewDvd() throws DvdLibraryDaoException {
         view.displayDvdBanner();
         String title = view.getTitleChoice();
         Dvd dvd = dao.getDvd(title);
@@ -106,7 +112,7 @@ public class DvdLibraryController {
     }
     
     //6. remove dvd
-    private void removeDvd() {
+    private void removeDvd() throws DvdLibraryDaoException {
         view.displayRemoveBanner();
         String title = view.getTitleChoice();
         Dvd removedDvd = dao.removeDvd(title);
@@ -123,5 +129,12 @@ public class DvdLibraryController {
         view.displayUnknownCommandBanner();
     }
     
+    //constructor to initialize dao and view
+    //view's dependency is now injected into its constructor
+    //not controller's job to inject correct userio impl, that's job of app class
+    public DvdLibraryController(DvdLibraryDao dao, DvdLibraryView view) {
+        this.dao = dao;
+        this.view = view;
+    }
     
 }

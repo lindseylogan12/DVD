@@ -6,6 +6,11 @@
 package com.mthreell.dvdlibrary;
 
 import com.mthreell.dvdlibrary.controller.DvdLibraryController;
+import com.mthreell.dvdlibrary.dao.DvdLibraryDao;
+import com.mthreell.dvdlibrary.dao.DvdLibraryDaoFileImpl;
+import com.mthreell.dvdlibrary.ui.DvdLibraryView;
+import com.mthreell.dvdlibrary.ui.UserIO;
+import com.mthreell.dvdlibrary.ui.UserIOConsoleImpl;
 
 /**
  *
@@ -14,7 +19,11 @@ import com.mthreell.dvdlibrary.controller.DvdLibraryController;
 public class App {
 
     public static void main(String[] args) {
-        DvdLibraryController controller = new DvdLibraryController();
+        UserIO myIo = new UserIOConsoleImpl();
+        DvdLibraryView myView = new DvdLibraryView(myIo);
+        DvdLibraryDao myDao = new DvdLibraryDaoFileImpl();
+        DvdLibraryController controller = 
+                new DvdLibraryController(myDao, myView);
         controller.run();
     }
 }

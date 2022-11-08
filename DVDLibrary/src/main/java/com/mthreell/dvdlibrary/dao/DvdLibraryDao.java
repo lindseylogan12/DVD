@@ -17,20 +17,20 @@ public interface DvdLibraryDao {
     //adds a given dvd to collection and assocaites it with the given dvd title
     //if dvd alrdy associated with that title, it will return dvd object,
     // otherwise, null
-    Dvd addDvd(String title, Dvd dvd);
+    Dvd addDvd(String title, Dvd dvd) throws DvdLibraryDaoException;
     
     // edit given dvd. if dvd is associaed with title, it will return dvd
-    Dvd updateDvd(String title, Dvd dvd);
+    Dvd updateDvd(String title, Dvd dvd) throws DvdLibraryDaoException;
     
     //search dvds by title
-    List<Dvd> getDvdsByTitle(String title);
+    List<Dvd> getDvdsByTitle(String title) throws DvdLibraryDaoException;
     
     //display info for given dvd
-    Dvd getDvd(String title);
+    Dvd getDvd(String title) throws DvdLibraryDaoException;
     
     //displays list of all dvds
-    List<Dvd> getAllDvds();
+    List<Dvd> getAllDvds() throws DvdLibraryDaoException;
     
     //remove dvd
-    Dvd removeDvd(String title);
+    Dvd removeDvd(String title) throws DvdLibraryDaoException;
 }

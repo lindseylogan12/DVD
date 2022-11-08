@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class DvdLibraryView {
     
-    private UserIO io = new UserIOConsoleImpl();
+    private UserIO io;
     
     public int printMenuAndGetSelection() {
         io.print("Main Menu");
@@ -198,6 +198,16 @@ public class DvdLibraryView {
     // misc
     public void displayUnknownCommandBanner() {
         io.print("Unknown Command.");
+    }
+    
+    //constructor initializes the io member field.
+    public DvdLibraryView(UserIO io) {
+        this.io = io;
+    }
+    
+    public void displayErrorMessage(String errorMsg) {
+        io.print("=== ERROR ===");
+        io.print(errorMsg);
     }
     
 }
